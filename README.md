@@ -10,4 +10,4 @@ The project can be accessed at: https://github.com/RadoslavTs/Hangman
 
 Created by Lord Radoslav Tsepenishev
 
-![ScreenShot](images\Capture.PNG)
+![ScreenShot](Capture.PNG)
