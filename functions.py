@@ -7,6 +7,8 @@ def clean_screen():
 
 
 def guess_letter(letter, words_in, dash):
+    if letter == words_in:
+        return letter
     if letter in words_in:
         for i in range(len(words_in)):
             if words_in[i] == letter:

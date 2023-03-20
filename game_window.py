@@ -22,34 +22,38 @@ def render_main():
 
 def handle_guess(event=1):
     global lives_left
+    global won_flag
     guess = guess_entry.get().lower()
-    guess_entry.delete(0)
+    guess_entry.delete(0, tkinter.END)
     result = guess_letter(guess, word, dashes)
-
-    if result:
-        label_word.config(text=' '.join(result))
-        if '_' not in result:
-            remaining_lives_label.config(text='YOU WON!')
-            guess_button.config(state='disabled')
-
+    if lives_left == 0 or won_flag:
+        pass
     else:
-        lives_left -= 1
-        remaining_lives_label.config(text='Remaining lives: {}'.format(lives_left))
-        if lives_left == 5:
-            image_label.config(image=five_hp_image)
-        elif lives_left == 4:
-            image_label.config(image=four_hp_image)
-        elif lives_left == 3:
-            image_label.config(image=three_hp_image)
-        elif lives_left == 2:
-            image_label.config(image=two_hp_image)
-        elif lives_left == 1:
-            image_label.config(image=one_hp_image)
-        if lives_left == 0:
-            label_word.config(text=word)
-            remaining_lives_label.config(text="YOU LOSE!", fg='red')
-            guess_button.config(state='disabled')
-            image_label.config(image=dead_image)
+        if result:
+            label_word.config(text=' '.join(result))
+            if '_' not in result:
+                remaining_lives_label.config(text='YOU WON!')
+                guess_button.config(state='disabled')
+                won_flag = True
+
+        else:
+            lives_left -= 1
+            remaining_lives_label.config(text='Remaining lives: {}'.format(lives_left))
+            if lives_left == 5:
+                image_label.config(image=five_hp_image)
+            elif lives_left == 4:
+                image_label.config(image=four_hp_image)
+            elif lives_left == 3:
+                image_label.config(image=three_hp_image)
+            elif lives_left == 2:
+                image_label.config(image=two_hp_image)
+            elif lives_left == 1:
+                image_label.config(image=one_hp_image)
+            if lives_left == 0:
+                label_word.config(text=word)
+                remaining_lives_label.config(text="YOU LOSE!", fg='red')
+                guess_button.config(state='disabled')
+                image_label.config(image=dead_image)
 
 
 def new_game():
@@ -60,10 +64,13 @@ def new_game():
     global result_label
     global image_label
     global label_word
+    global won_flag
     clean_screen()
     word = get_word()
     lives_left = 6
     dashes = ['_'] * len(word)
+    guess_entry.delete(0, tkinter.END)
+    won_flag = False
     remaining_lives_label = Label(text='Remaining lives: {}'.format(lives_left))
     result_label = Label(text='Result')
     image_label = tkinter.Label(image=full_hp_image)
@@ -81,6 +88,7 @@ lives_left = 6
 dashes = ['_'] * len(word)
 remaining_lives_label = Label(text='Remaining lives: {}'.format(lives_left))
 result_label = Label(text='Result')
+won_flag = False
 
 guess_button = Button(
     root,
